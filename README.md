@@ -2,40 +2,52 @@
 
 ## Overview
 
-This project contains a smart contract written in Solidity that implements a simple auction, with a defined base bid, duration, partial withdrawal for non-winning bidders while the auction is active, and total withdrawal for all non-winning bids at the end of the auction. A persistent record of all bidders is kept, including the winner and the final bid amount.
+This project contains a smart contract in Solidity that implements a basic auction, with a defined base bid, fixed duration, partial withdrawal for non-winning bidders while the auction is active, and total withdrawal of all non-winning offers after the auction ends. A persistent history of all bidders is maintained, including the winner and their final bid amount.
 
-## 📦 File
+## File
 
-- `Auction.sol`: Main contract handling all auction logic.
+- `Auction.sol`: Main contract that handles all auction logic.
 
-## 🚀 Key Features
+## Key Features
 
-- Automatically starts the auction when deployed (2-day duration, with a 1 ether base offer).
-- Accepts successive bids only if they are at least 5% higher than the current highest bid.
-- Maintains a full bid history.
-- Refunds accumulated funds (except the final winning bid).
-- Emits key events (`NewOffer`, `AuctionEnded`).
+• Automatically starts the auction when deployed (2-day duration, with a base offer of 1 ether).
 
-## 🔐 Modifiers and Restrictions
+• Registers successive bids only if they are at least 5% higher than the current one.
 
-- `onlyOwner`: Only the auction owner can execute refunds after the auction ends.
-- `activeAuction`: Validates that the auction is still ongoing.
-- `validprecio`: Ensures a new offer is greater than the current one.
+• Maintains a full bidder history.
 
-## 🧱 Key Structures and Variables
+• Refunds accumulated funds (except the final winning offer).
 
-- `Bidders[] offerList`: History of bids with address and amount.
-- `mapping(address => uint256) acummOfers`: Accumulated offer per address.
-- `keyList[]`: Unique list of addresses to iterate.
-- `event NewOffer`: Emits when a new offer is placed.
-- `event AuctionEnded`: Emits when the auction ends.
+• Emits events (`NewOffer`, `AuctionEnded`).
 
-## 💸 Refund Logic and Deductions
+## Modifiers and Restrictions
 
-- Only the auction owner can issue refunds (excluding the winner).
-- A 2% fee is retained by the contract when refunding.
-- The winner does not receive a refund for their final bid, but may withdraw previous offers if not yet claimed during the auction.
+• `onlyOwner`: Only the owner can execute deposit refunds once the auction ends.
 
-## 🧑‍💼 Author
+• `activeAuction`: Ensures the auction is still ongoing.
 
-Developed by Andrés Delgado for educational and exploratory purposes in blockchain and decentralized auction environments.
+• `validprecio`: Validates that a new offer is higher than the current one.
+
+## Key Structures and Variables
+
+• `Bidders[] offerList`: Bid history with address and amount.
+
+• `mapping(address => uint256) acummOfers`: Accumulated amount per bidder.
+
+• `keyList[]`: List of unique keys for iteration.
+
+• `event NewOffer`: Signals a new offer was made.
+
+• `event AuctionEnded`: Signals the end of the auction.
+
+## Refunds and Deduction Logic
+
+• Only the auction owner can refund all non-winning offers (excluding the winner).
+
+• A 2% fee is deducted and remains in the contract.
+
+• The winner does not receive a refund for their final offer. If they have unclaimed earlier offers during the auction, they may withdraw them.
+
+## Author
+
+Developed by Andrés Delgado for educational and exploratory purposes in blockchain and decentralized auctions.
