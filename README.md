@@ -1,6 +1,6 @@
 # 🪙 Auction in Solidity - Auction.sol
 
-## Overview
+## Overview improvements
 
 This project contains a smart contract in Solidity that implements a basic auction, with a defined base bid, fixed duration, partial withdrawal for non-winning bidders while the auction is active, and total withdrawal of all non-winning offers after the auction ends. A persistent history of all bidders is maintained, including the winner and their final bid amount.
 
